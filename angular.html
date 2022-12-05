@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angular Cheat Sheet</title>
+  </head>
+  <body>
+    <p>
+      Disclaimer: La pagina copia al portapapeles automaticamente cada vez que escribes en
+      un input.
+    </p>
+    <h1>Crear nueva aplicacion</h1>
+    <pre>ng new app-name</pre>
+    <p>El nombre de la app debe de ser todo en minuscula.</p>
+    <p>
+      Si el nombre de la app esta compuesto por mas de una palabra, las mismas deben de
+      estar separadas por guiones.
+    </p>
+    <h3>App command generator</h3>
+    <form>
+      <label for="ng-new-app-name">App name: </label>
+      <input
+        name="ng-new-app-name"
+        id="ng-new-app-name"
+        autocomplete="off"
+        oninput="ngNewGenerateCommand(event)"
+      />
+    </form>
+    <br />
+    <div id="ng-new-command-result"></div>
+    <br />
+    <hr />
+
+    <script>
+      const cleanAppName = (appName) => {
+        return appName.trim().replace(/\s\s+/g, " ").toLowerCase().replaceAll(" ", "-");
+      };
+      function ngNewGenerateCommand(event) {
+        const appName = event.currentTarget.value;
+        cleanAppname = cleanAppName(appName);
+        const command = `ng new ${cleanAppname}`;
+        document.getElementById("ng-new-command-result").innerHTML = command;
+        copyText(command);
+      }
+      function copyText(text) {
+        navigator.clipboard.writeText(text);
+      }
+    </script>
+  </body>
+</html>
