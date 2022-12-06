@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gIT Cheat Sheet</title>
+  </head>
+  <body>
+    <p>
+      Disclaimer: La pagina copia al portapapeles automaticamente cada vez que escribes en
+      un input.
+    </p>
+    <h1>Crear nueva branch</h1>
+    <section>
+      <form id="new-branch-form">
+        <fieldset id="branch-type">
+          <legend>Select a branch type:</legend>
+
+          <div>
+            <input type="radio" id="feat" name="drone" value="feat" checked />
+            <label for="feat">feat</label>
+          </div>
+
+          <div>
+            <input type="radio" id="feature" name="drone" value="feature" checked />
+            <label for="feature">feature</label>
+          </div>
+
+          <div>
+            <input type="radio" id="docs" name="drone" value="docs" />
+            <label for="docs">docs</label>
+          </div>
+
+          <div>
+            <input type="radio" id="fix" name="drone" value="fix" />
+            <label for="fix">fix</label>
+          </div>
+        </fieldset>
+        <br />
+        <label for="task-id">Task id: </label>
+        <input name="task-id" id="task-id" autocomplete="off" />
+        <br />
+        <br />
+        <label for="task-title">Task title: </label>
+        <input name="task-title" id="task-title" autocomplete="off" />
+      </form>
+      <br />
+      <div id="new-branch-command">git checkout -b feature/ticket-id/branch-name</div>
+      <br />
+      <hr />
+    </section>
+    <script>
+      const cleanTaskTitle = (appName) => {
+        return appName.trim().replace(/\s\s+/g, " ").toLowerCase().replaceAll(" ", "-");
+      };
+
+      const cleanTaskId = (taskId) => {
+        return taskId.trim().replace(/\s\s+/g, " ").toUpperCase();
+      };
+
+      const newBranch = {
+        type: "",
+        id: "",
+        title: "",
+        updateData: function (form) {
+          const formData = new FormData(event.currentTarget);
+          this.id = cleanTaskId(formData.get("task-id"));
+          this.title = cleanTaskTitle(formData.get("task-title"));
+          const command = `git checkout -b ${this.type}/${this.id}/${this.title}`;
+          document.getElementById("new-branch-command").innerHTML = command;
+          debugger;
+        },
+      };
+
+      function copyText(text) {
+        navigator.clipboard.writeText(text);
+      }
+
+      const newBranchForm = document.getElementById("new-branch-form");
+
+      newBranchForm.addEventListener("change", function (event) {
+        newBranch.updateData(event.currentTarget);
+      });
+    </script>
+  </body>
+</html>

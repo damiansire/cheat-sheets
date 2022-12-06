@@ -39,8 +39,8 @@
       };
       function ngNewGenerateCommand(event) {
         const appName = event.currentTarget.value;
-        cleanAppname = cleanAppName(appName);
-        const command = `ng new ${cleanAppname}`;
+        const cleanedAppName = cleanAppName(appName);
+        const command = `ng new ${cleanedAppName}`;
         document.getElementById("ng-new-command-result").innerHTML = command;
         copyText(command);
       }
